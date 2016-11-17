@@ -14,23 +14,45 @@
                     <p>|</p>
                     <p>|</p>
 
-                    <div id="hangman-head"></div>
+                    @{
+                        <div id="body-center">
+                        if(Model.GetGuess() > 0)
+                        {
+                            if(Model.GetGuess() >= 1)
+                            {
+                                <div id="hangman-head"></div>
 
-                    <div id="upper-body">
-                        <div id="hangman-left-arm"></div>
+                                <div id="upper-body">
+                                    if(Model.GetGuess() >= 3)
+                                    {
+                                        <div id="hangman-left-arm"></div>
+                                    }
+                                    if(Model.GetGuess() >= 2)
+                                    {
+                                        <div id="hangman-torso"></div>
+                                    }
+                                    if(Model.GetGuess() >= 4)
+                                    {
+                                        <div id="hangman-right-arm"></div>
+                                    }
+                                </div>
 
-                        <div id="hangman-torso"></div>
+                                <div id="lower-body">
+                                    if(Model.GetGuess() >= 5)
+                                    {
+                                        <div id="hangman-left-leg"></div>
+                                    }
+                                    if(Model.GetGuess() >= 6)
+                                    {
+                                        <div id="lower-body-filler"></div>
 
-                        <div id="hangman-right-arm"></div>
-                    </div>
-
-                    <div id="lower-body">
-                        <div id="hangman-left-leg"></div>
-
-                        <div id="lower-body-filler"></div>
-
-                        <div id="hangman-right-leg"></div>
-                    </div>
+                                        <div id="hangman-right-leg"></div>
+                                    }
+                                </div>
+                            }
+                        }
+                        </div>
+                    }
 
                 </div>
             </div>

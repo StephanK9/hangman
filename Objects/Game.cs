@@ -21,6 +21,11 @@ namespace Hangman.Objects
             _wordLists.Add(word);
         }
 
+        public int GetGuess()
+        {
+            return _guess;
+        }
+
         public void IncreaseGuess()
         {
             _guess++;
