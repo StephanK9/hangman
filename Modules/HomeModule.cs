@@ -1,4 +1,7 @@
 using Nancy;
+using Hangman.Objects;
+using System;
+using System.Collections.Generic;
 
 namespace Hangman
 {
