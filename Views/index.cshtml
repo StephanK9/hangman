@@ -14,45 +14,43 @@
                     <p>|</p>
                     <p>|</p>
 
-                    @{
-                        <div id="body-center">
-                        if(Model.GetGuess() > 0)
+                    <div id="body-center">
+                    @if(Model.GetGuessM() > 0)
+                    {
+                        @if(Model.GetGuessM() >= 1)
                         {
-                            if(Model.GetGuess() >= 1)
-                            {
-                                <div id="hangman-head"></div>
+                            <div id="hangman-head"></div>
 
-                                <div id="upper-body">
-                                    if(Model.GetGuess() >= 3)
-                                    {
-                                        <div id="hangman-left-arm"></div>
-                                    }
-                                    if(Model.GetGuess() >= 2)
-                                    {
-                                        <div id="hangman-torso"></div>
-                                    }
-                                    if(Model.GetGuess() >= 4)
-                                    {
-                                        <div id="hangman-right-arm"></div>
-                                    }
-                                </div>
+                            <div id="upper-body">
+                                @if(Model.GetGuessM() >= 3)
+                                {
+                                    <div id="hangman-left-arm"></div>
+                                }
+                                @if(Model.GetGuessM() >= 2)
+                                {
+                                    <div id="hangman-torso"></div>
+                                }
+                                @if(Model.GetGuessM() >= 4)
+                                {
+                                    <div id="hangman-right-arm"></div>
+                                }
+                            </div>
 
-                                <div id="lower-body">
-                                    if(Model.GetGuess() >= 5)
-                                    {
-                                        <div id="hangman-left-leg"></div>
-                                    }
-                                    if(Model.GetGuess() >= 6)
-                                    {
-                                        <div id="lower-body-filler"></div>
+                            <div id="lower-body">
+                                @if(Model.GetGuessM() >= 5)
+                                {
+                                    <div id="hangman-left-leg"></div>
+                                    <div id="lower-body-filler"></div>
+                                }
+                                @if(Model.GetGuessM() >= 6)
+                                {
 
-                                        <div id="hangman-right-leg"></div>
-                                    }
-                                </div>
-                            }
+                                    <div id="hangman-right-leg"></div>
+                                }
+                            </div>
                         }
-                        </div>
                     }
+                    </div>
 
                 </div>
             </div>
@@ -62,13 +60,42 @@
         </div>
 
         <div id="user-area">
-            <form action="/" method="post">
-                <div class="form-group">
-                    <label for="user-guess">Enter your guess: </label>
-                    <input id="user-guess" name="user-guess" required="required" placeholder="e" type="text" pattern="\w">
-                    <button type="submit">Guess!</button>
-                </div>
-            </form>
+            @if(!Model.GetGameWinM() && !Model.GetGameLoseM())
+            {
+                <form action="/" method="post">
+                    <div class="form-group">
+                        <label for="user-guess">Enter your guess: </label>
+                        <input id="user-guess" name="user-guess" required="required" placeholder="e" type="text" pattern="\w">
+                        <button type="submit">Guess!</button>
+                    </div>
+                </form>
+            }
+            @if(Model.GetGameWinM())
+            {
+                <h1>You Win!</h1>
+                <h2><a href="/">Click here to play again!</a></h2>
+            }
+            @if(Model.GetGameLoseM())
+            {
+                <h1>You Lost!</h1>
+                <h2>The word was @Model.GetSetWordM()</h2>
+                <h2><a href="/">Click here to play again!</a></h2>
+            }
+            <p>
+                @foreach(string letter in Model.GetWordStatusM())
+                {
+                    <span>@letter</span><span> </span>
+                }
+            </p>
+
+            <h2>Bad Guesses</h2>
+
+            <p>
+                @foreach(string letter in Model.GetBadGuessesM())
+                {
+                    <span>@letter</span><span></span>
+                }
+            </p>
         </div>
     </body>
 </html>

@@ -10,7 +10,32 @@ namespace Hangman
         public HomeModule()
         {
             Get["/"] = _ => {
-                return View["index.cshtml"];
+                Game.ChooseWord();
+                Game.ResetEverything();
+                Game newGame = new Game();
+                return View["index.cshtml", newGame];
+            };
+            Post["/"] = _ => {
+                string userGuess = Request.Form["user-guess"];
+                userGuess = userGuess.ToLower();
+
+                if(!Game.GetGameWin() && !Game.GetGameLose())
+                {
+                    if(Game.GetSetWord().Contains(userGuess))
+                    {
+                        Game.SetCurrentGuess(userGuess);
+                        Game.AddGoodGuess(userGuess);
+                    }
+                    else
+                    {
+                        Game.AddBadGuess(userGuess);
+                        Game.IncreaseGuess();
+                    }
+                }
+                Game.CheckGuess();
+                Game.CheckWin();
+                Game newGame = new Game();
+                return View["index.cshtml", newGame];
             };
         }
     }
